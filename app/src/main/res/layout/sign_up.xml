@@ -4,35 +4,37 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:onClick="signUpButtonClicked"
     tools:context=".MainActivity">
+
     <ImageView
         android:id="@+id/logoImageView"
-        app:layout_constraintTop_toTopOf="parent"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:contentDescription="@string/app_name"
         android:scaleType="centerCrop"
         android:src="@drawable/background_image_signin"
+        app:layout_constraintTop_toTopOf="parent"
         tools:layout_editor_absoluteX="0dp"
         tools:layout_editor_absoluteY="0" />
+
     <View
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@drawable/background_for_sign_in_screen"/>
+        android:background="@drawable/background_for_sign_in_screen" />
 
     <TextView
         android:id="@+id/signUpTextView"
-        android:layout_height="wrap_content"
         android:layout_width="wrap_content"
-        android:layout_marginBottom="50dp"
+        android:layout_height="wrap_content"
         android:layout_marginStart="70dp"
+        android:layout_marginBottom="50dp"
         android:gravity="center"
         android:text="@string/you_already_have_account"
         android:textColor="@android:color/white"
         android:textSize="17sp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        />
+        app:layout_constraintStart_toStartOf="parent" />
 
     <TextView
         android:id="@+id/signUpText"
@@ -48,19 +50,19 @@
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/buttonSignUp"
-        android:layout_width="match_parent"
+        android:layout_width="330dp"
         android:layout_height="45dp"
-        android:layout_marginStart="40dp"
-        android:layout_marginEnd="40dp"
-        android:layout_marginBottom="20dp"
+        android:layout_marginBottom="16dp"
+        android:background="@drawable/background_for_sign_in_button"
+        android:onClick="signUpButtonClicked"
         android:text="@string/sign_up_button"
         android:textAllCaps="@color/colorPrimary"
         android:textColor="@android:color/white"
         android:textSize="18sp"
-        app:layout_constraintBottom_toTopOf="@id/signUpTextView"
-        android:background="@drawable/background_for_sign_in_button"
 
-        />
+        app:layout_constraintBottom_toTopOf="@id/signUpTextView"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 
     <EditText
         android:id="@+id/inputPassword"
@@ -79,8 +81,8 @@
         android:textColor="@android:color/white"
         android:textColorHint="@color/colorTextHint"
         android:textSize="16sp"
-        app:layout_constraintBottom_toTopOf="@+id/buttonSignUp"
-        />
+        app:layout_constraintBottom_toTopOf="@+id/buttonSignUp" />
+
     <EditText
         android:id="@+id/inputEmail"
         android:layout_width="match_parent"
@@ -98,8 +100,8 @@
         android:textColor="@android:color/white"
         android:textColorHint="@color/colorTextHint"
         android:textSize="16sp"
-        app:layout_constraintBottom_toTopOf="@+id/inputPassword"
-        />
+        app:layout_constraintBottom_toTopOf="@+id/inputPassword" />
+
     <EditText
         android:id="@+id/inputPhoneNumber"
         android:layout_width="match_parent"
@@ -117,8 +119,8 @@
         android:textColor="@android:color/white"
         android:textColorHint="@color/colorTextHint"
         android:textSize="16sp"
-        app:layout_constraintBottom_toTopOf="@+id/inputEmail"
-        />
+        app:layout_constraintBottom_toTopOf="@+id/inputEmail" />
+
     <EditText
         android:id="@+id/inputAdress"
         android:layout_width="match_parent"
@@ -136,8 +138,8 @@
         android:textColor="@android:color/white"
         android:textColorHint="@color/colorTextHint"
         android:textSize="16sp"
-        app:layout_constraintBottom_toTopOf="@+id/inputPhoneNumber"
-        />
+        app:layout_constraintBottom_toTopOf="@+id/inputPhoneNumber" />
+
     <EditText
         android:id="@+id/inputLastName"
         android:layout_width="match_parent"
@@ -155,8 +157,7 @@
         android:textColor="@android:color/white"
         android:textColorHint="@color/colorTextHint"
         android:textSize="16sp"
-        app:layout_constraintBottom_toTopOf="@+id/inputAdress"
-        />
+        app:layout_constraintBottom_toTopOf="@+id/inputAdress" />
 
     <EditText
         android:id="@+id/inputFirstName"
@@ -175,8 +176,7 @@
         android:textColor="@android:color/white"
         android:textColorHint="@color/colorTextHint"
         android:textSize="16sp"
-        app:layout_constraintBottom_toTopOf="@+id/inputLastName"
-        />
+        app:layout_constraintBottom_toTopOf="@+id/inputLastName" />
 
 
     <TextView
@@ -190,22 +190,20 @@
         android:textColor="@android:color/white"
         android:textSize="18sp"
         android:textStyle="bold"
-        app:layout_constraintBottom_toTopOf="@id/inputFirstName"
-        />
+        app:layout_constraintBottom_toTopOf="@id/inputFirstName" />
 
     <TextView
         android:id="@+id/textYouHungry"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="center"
         android:layout_marginStart="150dp"
         android:layout_marginBottom="10dp"
+        android:gravity="center"
         android:text="You Hungry?"
         android:textColor="@android:color/white"
         android:textSize="30sp"
         android:textStyle="bold"
-        app:layout_constraintBottom_toTopOf="@id/textSignIn"
-        />
+        app:layout_constraintBottom_toTopOf="@id/textSignIn" />
 
     <TextView
         android:id="@+id/textWelcome"
@@ -218,9 +216,7 @@
         android:textColor="@android:color/white"
         android:textSize="38sp"
         android:textStyle="bold"
-        app:layout_constraintBottom_toTopOf="@id/textYouHungry"
-        />
-
+        app:layout_constraintBottom_toTopOf="@id/textYouHungry" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
