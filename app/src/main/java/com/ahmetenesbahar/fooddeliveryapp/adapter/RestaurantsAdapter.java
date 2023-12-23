@@ -46,19 +46,19 @@ public class RestaurantsAdapter extends RecyclerView.Adapter<RestaurantsAdapter.
 
     static class RestaurantViewHolder extends RecyclerView.ViewHolder {
 private ImageView restaurantImage;
-private TextView restaurantTitle, textRestaurant;
+private TextView restaurantTitle;
             public RestaurantViewHolder(@NonNull View itemView) {
                 super(itemView);
                 restaurantImage=itemView.findViewById(R.id.imageRestaurant);
                 restaurantTitle=itemView.findViewById(R.id.textRestaurantTitle);
-                textRestaurant=itemView.findViewById(R.id.textRestaurant);
+
 
             }
 
             void setRestaurantData(Restaurant restaurant){
                 restaurantImage.setImageResource(restaurant.getRestaurantImage());
                 restaurantTitle.setText(restaurant.getRestaurantTitle());
-                textRestaurant.setText(restaurant.getRestaurant());
+
             }
     }
 }

@@ -75,8 +75,14 @@ public class RestaurantsFragment extends Fragment {
         items.add(new Item(0,restaurant1));
         Restaurant restaurant2= new Restaurant(R.drawable.background_image_signin, "Katkı Döner Dürüm 2","Zıbab Yaparız Ivj Yaparız");
         items.add(new Item(0,restaurant2));
-        Restaurant restaurant3= new Restaurant(R.drawable.background_image_signin, "Katkı Döner Dürüm 3","Zıbab Yaparız Ivj Yaparız");
+        Restaurant restaurant3= new Restaurant(R.drawable.background_organik, "Katkı Döner Dürüm 3","Zıbab Yaparız Ivj Yaparız");
         items.add(new Item(0,restaurant3));
+        Restaurant restaurant4= new Restaurant(R.drawable.background_organik, "Katkı Döner Dürüm 3","Zıbab Yaparız Ivj Yaparız");
+        items.add(new Item(0,restaurant4));
+        Restaurant restaurant5= new Restaurant(R.drawable.background_organik, "Katkı Döner Dürüm 3","Zıbab Yaparız Ivj Yaparız");
+        items.add(new Item(0,restaurant5));
+        Restaurant restaurant6= new Restaurant(R.drawable.background_organik, "Katkı Döner Dürüm 3","Zıbab Yaparız Ivj Yaparız");
+        items.add(new Item(0,restaurant6));
 
         recyclerView.setAdapter(new RestaurantsAdapter(items));
 
