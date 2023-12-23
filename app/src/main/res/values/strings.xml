@@ -1,0 +1,19 @@
+<resources>
+    <string name="app_name">FoodDeliveryApp</string>
+    <string name="sign_up">If you don\'t have an account,</string>
+    <string name="sign_in">Sign In</string>
+    <string name="password">Password</string>
+    <string name="email">Email</string>
+    <string name="welcome_back">Welcome Back !</string>
+    <string name="sign_in_to_your_account">Sign in to your account !</string>
+    <string name="create_your_account">Create your account !</string>
+    <string name="create_account">Create Account</string>
+    <string name="phone_number">Phone Number</string>
+    <string name="adress">Adress</string>
+    <string name="first_name">First Name</string>
+    <string name="last_name">Last Name</string>
+    <string name="sign_up_button">Sign Up</string>
+    <string name="you_already_have_account">You already have account ?</string>
+
+
+</resources>
