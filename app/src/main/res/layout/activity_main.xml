@@ -57,7 +57,7 @@
         android:background="@drawable/background_for_sign_in_button"
         android:onClick="signInButtonClicked"
         android:text="@string/sign_in"
-        android:textAllCaps="@color/colorPrimary"
+        android:textAllCaps="false"
         android:textColor="@android:color/white"
         android:textSize="18sp"
 

@@ -56,10 +56,10 @@
         android:background="@drawable/background_for_sign_in_button"
         android:onClick="signUpButtonClicked"
         android:text="@string/sign_up_button"
-        android:textAllCaps="@color/colorPrimary"
+        android:textAllCaps="false"
         android:textColor="@android:color/white"
-        android:textSize="18sp"
 
+        android:textSize="18sp"
         app:layout_constraintBottom_toTopOf="@id/signUpTextView"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />

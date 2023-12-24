@@ -4,10 +4,10 @@ public class Restaurant {
     private int RestaurantImage;
     private String RestaurantTitle, restaurant;
 
-    public Restaurant(int restaurantImage, String restaurantTitle, String restaurant) {
+    public Restaurant(int restaurantImage, String restaurantTitle) {
         RestaurantImage = restaurantImage;
         RestaurantTitle = restaurantTitle;
-        this.restaurant = restaurant;
+
     }
 
     public int getRestaurantImage() {
@@ -18,7 +18,5 @@ public class Restaurant {
         return RestaurantTitle;
     }
 
-    public String getRestaurant() {
-        return restaurant;
-    }
+
 }
