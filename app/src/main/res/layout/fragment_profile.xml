@@ -1,14 +1,85 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/background_image_signin"
+    android:gravity="center"
+    android:orientation="vertical"
+
     tools:context=".ProfileFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="Profile fragment" />
+  <ImageView
+      android:id="@+id/imageViewProfileImage"
+      android:layout_width="160dp"
+      android:layout_height="160dp"
+      android:layout_marginBottom="40dp"
+      android:background="@drawable/circular_bg"
+      android:scaleType="centerCrop"
+      android:src="@drawable/baseline_person_24"
+      app:tint="#fff" />
 
-</FrameLayout>
+
+  <EditText
+      android:id="@+id/inputProfileAdress"
+      android:layout_width="match_parent"
+      android:layout_height="45dp"
+      android:layout_marginStart="40dp"
+      android:layout_marginEnd="40dp"
+      android:layout_marginBottom="15dp"
+      android:background="@drawable/background_for_input"
+      android:hint="@string/adress"
+      android:imeOptions="actionDone"
+      android:importantForAutofill="no"
+      android:inputType="text"
+      android:paddingStart="15dp"
+      android:paddingEnd="15dp"
+      android:textColor="@android:color/white"
+      android:textColorHint="@color/colorTextHint"
+      android:textSize="16sp" />
+
+  <EditText
+      android:id="@+id/inputProfilePhone"
+      android:layout_width="match_parent"
+      android:layout_height="45dp"
+      android:layout_marginStart="40dp"
+      android:layout_marginEnd="40dp"
+      android:layout_marginBottom="15dp"
+      android:background="@drawable/background_for_input"
+      android:enabled="false"
+      android:hint="@string/phone_number"
+      android:imeOptions="actionDone"
+      android:importantForAutofill="no"
+      android:inputType="phone"
+      android:paddingStart="15dp"
+      android:paddingEnd="15dp"
+      android:textColor="@android:color/white"
+      android:textColorHint="@color/colorTextHint"
+      android:textSize="16sp" />
+
+  <androidx.appcompat.widget.AppCompatButton
+      android:id="@+id/buttonUpdateProfile"
+      android:layout_width="330dp"
+      android:layout_height="45dp"
+      android:layout_marginBottom="20dp"
+      android:background="@drawable/background_for_sign_in_button"
+      android:text="@string/update_profile"
+      android:textAllCaps="@color/colorPrimary"
+      android:textColor="@android:color/white"
+      android:textSize="18sp" />
+
+  <androidx.appcompat.widget.AppCompatButton
+      android:id="@+id/signOutButton"
+      android:layout_width="330dp"
+      android:layout_height="45dp"
+      android:layout_marginBottom="20dp"
+      android:background="@drawable/background_for_signout_button"
+      android:onClick="signOutUser"
+      android:text="@string/sign_out"
+      android:textAllCaps="false"
+      android:textColor="@android:color/white"
+      android:textSize="18sp" />
+
+
+</LinearLayout>
