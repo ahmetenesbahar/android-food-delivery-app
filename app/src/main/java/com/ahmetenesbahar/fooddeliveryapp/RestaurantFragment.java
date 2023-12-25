@@ -3,21 +3,22 @@ package com.ahmetenesbahar.fooddeliveryapp;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.ahmetenesbahar.fooddeliveryapp.databinding.FragmentRestaurantBinding;
+import com.ahmetenesbahar.fooddeliveryapp.databinding.FragmentRestaurantsBinding;
+
 
 public class RestaurantFragment extends Fragment {
 
+    FragmentRestaurantBinding binding;
 
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
-
-
-    private String mParam1;
-    private String mParam2;
 
     public RestaurantFragment() {
         // Required empty public constructor
@@ -27,8 +28,7 @@ public class RestaurantFragment extends Fragment {
     public static RestaurantFragment newInstance(String param1, String param2) {
         RestaurantFragment fragment = new RestaurantFragment();
         Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
+
         fragment.setArguments(args);
         return fragment;
     }
@@ -37,8 +37,7 @@ public class RestaurantFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
+
         }
     }
 
@@ -46,6 +45,27 @@ public class RestaurantFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        return inflater.inflate(R.layout.fragment_restaurant, container, false);
+        binding = FragmentRestaurantBinding.inflate(inflater, container, false);
+        View view = binding.getRoot();
+        replaceFragment(new RestaurantMenuFragment());
+
+        binding.restaurantNav.setOnItemSelectedListener(item -> {
+            int itemId = item.getItemId();
+            if (itemId == R.id.restaurant_menu) {
+                replaceFragment(new RestaurantMenuFragment());
+            } else if (itemId == R.id.restaurant_comments) {
+                replaceFragment(new RestaurantCommentFragment());
+            }
+            return true;
+        });
+
+        return view;
+    }
+
+    private void replaceFragment(Fragment fragment) {
+        FragmentManager fragmentManager = getChildFragmentManager();
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        fragmentTransaction.replace(R.id.restaurant_layout, fragment);
+        fragmentTransaction.commit();
     }
 }
