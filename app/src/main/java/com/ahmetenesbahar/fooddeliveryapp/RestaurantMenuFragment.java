@@ -3,45 +3,39 @@ package com.ahmetenesbahar.fooddeliveryapp;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link RestaurantMenuFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
+import com.ahmetenesbahar.fooddeliveryapp.adapter.MenuAdapter;
+import com.ahmetenesbahar.fooddeliveryapp.adapter.RestaurantsAdapter;
+import com.ahmetenesbahar.fooddeliveryapp.databinding.FragmentRestaurantMenuBinding;
+import com.ahmetenesbahar.fooddeliveryapp.databinding.FragmentRestaurantsBinding;
+import com.ahmetenesbahar.fooddeliveryapp.models.Item;
+import com.ahmetenesbahar.fooddeliveryapp.models.Menu;
+import com.squareup.picasso.Picasso;
+import com.squareup.picasso.Target;
+
+import java.util.ArrayList;
+import java.util.List;
+
+
 public class RestaurantMenuFragment extends Fragment {
 
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
-
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
+    private FragmentRestaurantMenuBinding binding;
 
     public RestaurantMenuFragment() {
         // Required empty public constructor
     }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment RestaurantMenuFragment.
-     */
-    // TODO: Rename and change types and number of parameters
+
     public static RestaurantMenuFragment newInstance(String param1, String param2) {
         RestaurantMenuFragment fragment = new RestaurantMenuFragment();
         Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
+
         fragment.setArguments(args);
         return fragment;
     }
@@ -50,15 +44,37 @@ public class RestaurantMenuFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
+
         }
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_restaurant_menu, container, false);
+        binding = FragmentRestaurantMenuBinding.inflate(inflater, container, false);
+        View view = binding.getRoot();
+
+        RecyclerView recyclerView = binding.restaurantMenuRecyclerView;
+        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+
+        List<Item> items = new ArrayList<>();
+
+        // Restoran menü öğeleri
+
+        Menu menuEleman1 = new Menu("https://i.lezzet.com.tr/images-xxlarge-secondary/tekirdag-kahvalti-mekanlari-tekirdagin-en-iyi-11-kahvalticisi-4ce7a817-3925-4998-a4a3-9bee73eec748.jpg", "Kahvaltı");
+        items.add(new Item(0, menuEleman1));
+        Menu menuEleman2 = new Menu("https://www.karaca.com/blog/wp-content/uploads/2023/02/lezzetli-hamburger-tarifi.webp", "Hamburger");
+        items.add(new Item(0, menuEleman2));
+        Menu menuEleman3 = new Menu("https://images.deliveryhero.io/image/fd-tr/LH/xsw7-hero.jpg", "Pizza");
+        items.add(new Item(0, menuEleman3));
+        Menu menuEleman4 = new Menu("https://d17wu0fn6x6rgz.cloudfront.net/img/w/tarif/mgt/patates-kizartmasi.webp", "Patates Kızartması");
+        items.add(new Item(0, menuEleman4));
+        Menu menuEleman5 = new Menu("https://www.koylummantievi.com/wp-content/uploads/2022/03/kola-kutukola-cocacola-2021-01-10.jpg", "Kola");
+        items.add(new Item(0, menuEleman5));
+
+        recyclerView.setAdapter(new MenuAdapter(items));
+
+
+        return view;
     }
 }

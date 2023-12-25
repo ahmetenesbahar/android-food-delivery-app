@@ -12,7 +12,7 @@
         android:layout_height="200dp">
 
         <ImageView
-            android:id="@+id/imageRestaurant"
+            android:id="@+id/imageRestaurantMenu"
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:contentDescription="@string/app_name"
@@ -24,7 +24,7 @@
 
 
         <TextView
-            android:id="@+id/textRestaurantTitle"
+            android:id="@+id/textRestaurantMenuTitle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:shadowColor="@android:color/black"
@@ -34,7 +34,6 @@
             android:textColor="@android:color/white"
             android:textSize="28sp"
             android:textStyle="bold"
-
             app:layout_constraintBottom_toBottomOf="parent"
             tools:layout_editor_absoluteX="20dp" />
 

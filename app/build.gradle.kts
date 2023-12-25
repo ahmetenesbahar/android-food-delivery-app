@@ -23,7 +23,7 @@ android {
             proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
         }
     }
-    buildFeatures{
+    buildFeatures {
         viewBinding = true
     }
     compileOptions {
@@ -44,6 +44,8 @@ dependencies {
     implementation("com.google.android.material:material:1.11.0")
 
     implementation("com.makeramen:roundedimageview:2.3.0")
+
+    implementation("com.squareup.picasso:picasso:2.8")
 
     implementation(platform("com.google.firebase:firebase-bom:32.7.0"))
     implementation("com.google.firebase:firebase-analytics")

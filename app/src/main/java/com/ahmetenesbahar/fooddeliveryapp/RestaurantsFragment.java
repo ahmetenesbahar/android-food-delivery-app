@@ -26,11 +26,6 @@ public class RestaurantsFragment extends Fragment {
 
     private FragmentRestaurantsBinding binding;
 
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
-
-    private String mParam1;
-    private String mParam2;
 
     public RestaurantsFragment() {
     }
@@ -38,8 +33,7 @@ public class RestaurantsFragment extends Fragment {
     public static RestaurantsFragment newInstance(String param1, String param2) {
         RestaurantsFragment fragment = new RestaurantsFragment();
         Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
+
         fragment.setArguments(args);
         return fragment;
     }
@@ -48,8 +42,7 @@ public class RestaurantsFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
+
         }
     }
 
@@ -71,7 +64,7 @@ public class RestaurantsFragment extends Fragment {
         Restaurant restaurant2 = new Restaurant(R.drawable.background_image_signin, "Katkı Döner Dürüm 2");
         items.add(new Item(0, restaurant2));
 
-        Restaurant restaurant3 = new Restaurant(R.drawable.background_organik, "Katkı Döner Dürüm 3");
+        Restaurant restaurant3 = new Restaurant(R.drawable.background_organik, "Katkı Döner Dürüm 1");
         items.add(new Item(0, restaurant3));
 
         Restaurant restaurant4 = new Restaurant(R.drawable.background_organik, "Katkı Döner Dürüm 3");
@@ -107,7 +100,7 @@ public class RestaurantsFragment extends Fragment {
                     // Örneğin, ProfileFragment'a gitmek için
                     RestaurantFragment restaurantFragment = new RestaurantFragment();
                     FragmentTransaction transaction = getFragmentManager().beginTransaction();
-                    transaction.replace(R.id.frame_layout , restaurantFragment);
+                    transaction.replace(R.id.frame_layout, restaurantFragment);
                     transaction.addToBackStack(null);
                     transaction.commit();
 

@@ -58,7 +58,7 @@ public class RestaurantFragment extends Fragment {
             }
             return true;
         });
-
+        
         return view;
     }
 
