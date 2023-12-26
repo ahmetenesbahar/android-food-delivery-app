@@ -23,6 +23,7 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import java.util.Objects;
 import java.util.UUID;
 
 public class MainActivity extends FullScreenBaseActivity {
@@ -33,7 +34,6 @@ public class MainActivity extends FullScreenBaseActivity {
     private FirebaseDatabase database;
     DatabaseReference reference;
     UUID uuid = UUID.randomUUID();
-
 
 
     @Override
@@ -48,7 +48,7 @@ public class MainActivity extends FullScreenBaseActivity {
         View view = binding.getRoot();
         setContentView(view);
 
-        database=FirebaseDatabase.getInstance();
+        database = FirebaseDatabase.getInstance();
         auth = FirebaseAuth.getInstance();
         FirebaseUser user = auth.getCurrentUser();
 
@@ -75,48 +75,53 @@ public class MainActivity extends FullScreenBaseActivity {
         String password = inputPassword.getText().toString().trim();
         EditText inputPhoneNumber = findViewById(R.id.inputPhoneNumber);
         String phoneNumber = inputPhoneNumber.getText().toString().trim();
-        EditText inputAdress = findViewById(R.id.inputAdress);
-        String adress = inputAdress.getText().toString().trim();
+        EditText inputAddress = findViewById(R.id.inputAdress);
+        String address = inputAddress.getText().toString().trim();
         EditText inputLastName = findViewById(R.id.inputLastName);
         String lastName = inputLastName.getText().toString().trim();
         EditText inputFirstName = findViewById(R.id.inputFirstName);
         String firstName = inputFirstName.getText().toString().trim();
-        String userId = uuid.toString();
 
-        Log.d("SignUp", "Email: " + email);
-        Log.d("SignUp", "Password: " + password);
-        Log.d("SignUp", "PhoneNumber: " + phoneNumber);
-        Log.d("SignUp", "Adress: " + adress);
-        Log.d("SignUp", "LastName: " + lastName);
-        Log.d("SignUp", "FirstName: " + firstName);
-
-        if (email.length()==0 || password.length()==0 || phoneNumber.length()==0 || adress.length()==0 || lastName.length()==0 || firstName.length()==0) {
+        if (email.length() == 0 || password.length() == 0 || phoneNumber.length() == 0 || address.length() == 0 || lastName.length() == 0 || firstName.length() == 0) {
             Toast.makeText(this, "Please fill in all the required fields.", Toast.LENGTH_LONG).show();
-
-
         } else {
+            auth.createUserWithEmailAndPassword(email, password)
+                    .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                        @Override
+                        public void onComplete(@NonNull Task<AuthResult> task) {
+                            if (task.isSuccessful()) {
+                                // Kullanıcı başarıyla oluşturuldu, auth UID'sini al
+                                String userId = Objects.requireNonNull(auth.getCurrentUser()).getUid();
 
-            Users user = new Users(firstName, lastName, phoneNumber, adress, email, password);
-            reference = database.getReference("Users");
-            reference.child(userId).setValue(user);
+                                Users user = new Users(firstName, lastName, phoneNumber, address, email, password);
 
-            reference.child(userId).setValue(user).addOnCompleteListener(new OnCompleteListener<Void>() {
-                @Override
-                public void onComplete(@NonNull Task<Void> task) {
-                    auth.createUserWithEmailAndPassword(email, password);
-                    Toast.makeText(MainActivity.this, "User created successfully.", Toast.LENGTH_LONG).show();
-                    Intent intent = new Intent(MainActivity.this, MenuActivity.class);
-                    startActivity(intent);
-                    finish();
-                }
-            }).addOnFailureListener(new OnFailureListener() {
-                @Override
-                public void onFailure(@NonNull Exception e) {
-                    Toast.makeText(MainActivity.this, e.getLocalizedMessage().toString(), Toast.LENGTH_LONG).show();
-                }
-            });
+                                // Real-time database'e kullanıcıyı kaydet
+                                reference = database.getReference("Users");
+                                reference.child(userId).setValue(user)
+                                        .addOnCompleteListener(new OnCompleteListener<Void>() {
+                                            @Override
+                                            public void onComplete(@NonNull Task<Void> task) {
+                                                Toast.makeText(MainActivity.this, "User created successfully.", Toast.LENGTH_LONG).show();
+                                                Intent intent = new Intent(MainActivity.this, MenuActivity.class);
+                                                startActivity(intent);
+                                                finish();
+                                            }
+                                        })
+                                        .addOnFailureListener(new OnFailureListener() {
+                                            @Override
+                                            public void onFailure(@NonNull Exception e) {
+                                                Toast.makeText(MainActivity.this, e.getLocalizedMessage(), Toast.LENGTH_LONG).show();
+                                            }
+                                        });
+                            } else {
+                                // Kullanıcı oluşturma başarısız olursa
+                                Toast.makeText(MainActivity.this, Objects.requireNonNull(task.getException()).getLocalizedMessage(), Toast.LENGTH_LONG).show();
+                            }
+                        }
+                    });
         }
     }
+
 
     public void signInButtonClicked(View view) {
         String email = binding.inputEmail.getText().toString();
