@@ -68,6 +68,9 @@ public class MenuAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         public MenuViewHolder(ItemContainerMenuBinding binding) {
             super(binding.getRoot());
             this.binding = binding;
+            
+            binding.btnDecrease.setOnClickListener(v -> decreaseQuantity());
+            binding.btnIncrease.setOnClickListener(v -> increaseQuantity());
 
         }
 
@@ -76,6 +79,20 @@ public class MenuAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             binding.textRestaurantMenuTitle.setText(menu.getRestaurantMenuTitle());
         }
 
+        private void increaseQuantity() {
+            int currentQuantity = Integer.parseInt(binding.textQuantity.getText().toString());
+            binding.textQuantity.setText(String.valueOf(currentQuantity + 1));
+        }
+
+        private void decreaseQuantity() {
+            int currentQuantity = Integer.parseInt(binding.textQuantity.getText().toString());
+            if (currentQuantity > 0) {
+                binding.textQuantity.setText(String.valueOf(currentQuantity - 1));
+            }
+        }
+
 
     }
+
+
 }

@@ -90,13 +90,13 @@ public class RestaurantsFragment extends Fragment {
             public boolean onInterceptTouchEvent(@NonNull RecyclerView rv, @NonNull MotionEvent e) {
                 View childView = rv.findChildViewUnder(e.getX(), e.getY());
                 if (childView != null && gestureDetector.onTouchEvent(e)) {
-                    // Burada tıklanan öğenin pozisyonunu alabilirsiniz
+                    // Burada tıklanan öğenin pozisyonunu alabiliyoruz
                     int position = rv.getChildAdapterPosition(childView);
 
-                    // Tıklanan öğenin verilerini alabilirsiniz
+                    // Tıklanan öğenin verilerini almaya yarıyor
                     Item clickedItem = items.get(position);
 
-                    // Tıklanan öğenin verilerine göre bir işlem yapabilirsiniz
+                    // Tıklanan öğenin verilerine göre bir işlem yapmaya yarıyor
                     // Örneğin, ProfileFragment'a gitmek için
                     RestaurantFragment restaurantFragment = new RestaurantFragment();
                     FragmentTransaction transaction = getFragmentManager().beginTransaction();

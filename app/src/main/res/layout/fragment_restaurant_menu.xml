@@ -1,10 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".RestaurantMenuFragment">
-
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/restaurantMenuRecyclerView"
@@ -13,5 +12,17 @@
         android:clipToPadding="false"
         android:padding="8dp"
         android:background="@color/colorGray"
+        android:layout_above="@+id/orderBtn"
         applayoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
-</FrameLayout>
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/orderBtn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:background="@drawable/order_button"
+        android:text="Order Now"
+        android:textAllCaps="false"
+        android:textColor="#fff" />
+</RelativeLayout>

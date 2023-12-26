@@ -5,7 +5,8 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="#F0F0F0"
-    tools:context=".RestaurantFragment">
+    tools:context=".RestaurantFragment"
+    android:id="@+id/restaurant_main_layout">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -14,10 +15,11 @@
         <FrameLayout
             android:id="@+id/restaurant_layout"
             android:layout_width="match_parent"
-            android:layout_height="430dp"
+            android:layout_height="495dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/restaurantNav">
+            app:layout_constraintTop_toBottomOf="@+id/restaurantNav"
+            app:layout_constraintBottom_toBottomOf="parent">
 
         </FrameLayout>
 
@@ -49,7 +51,7 @@
 
 
             <androidx.constraintlayout.widget.ConstraintLayout
-                android:layout_width="375dp"
+                android:layout_width="390dp"
                 android:layout_height="75dp"
                 android:layout_gravity="center">
 
@@ -62,7 +64,7 @@
 
                     <androidx.constraintlayout.widget.ConstraintLayout
                         android:id="@+id/constraintBottom"
-                        android:layout_width="375dp"
+                        android:layout_width="390dp"
                         android:layout_height="75dp"
                         android:layout_gravity="center"
                         android:background="#F0F0F0">

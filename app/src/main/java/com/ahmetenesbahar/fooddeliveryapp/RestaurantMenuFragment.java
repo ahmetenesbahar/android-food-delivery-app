@@ -1,12 +1,17 @@
 package com.ahmetenesbahar.fooddeliveryapp;
 
+import android.content.Intent;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.view.GestureDetector;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -74,6 +79,13 @@ public class RestaurantMenuFragment extends Fragment {
 
         recyclerView.setAdapter(new MenuAdapter(items));
 
+        binding.orderBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(), CommentActivity.class);
+                startActivity(intent);
+            }
+        });
 
         return view;
     }

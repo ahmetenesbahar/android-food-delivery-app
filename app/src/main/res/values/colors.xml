@@ -6,4 +6,5 @@
     <color name="colorTextHint">#ECECEC</color>
     <color name="colorGray">#F0F0F0</color>
     <color name="colorYellow">#FFC436</color>
+    <color name="colorOrange">#FFA732</color>
 </resources>
