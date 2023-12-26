@@ -118,13 +118,16 @@ public class RestaurantsFragment extends Fragment {
                     // Tıklanan öğenin verilerini almaya yarıyor
                     Item clickedItem = items.get(position);
                     Restaurant clickedRestaurant = (Restaurant) clickedItem.getObject();
+                    RestaurantFragment restaurantFragment = new RestaurantFragment();
 
                     Bundle bundle = new Bundle();
-                    bundle.putParcelable("clickedRestaurant", clickedRestaurant);
+                    bundle.putSerializable("clickedRestaurant", clickedRestaurant);
+                    restaurantFragment.setArguments(bundle);
+
 
                     // Tıklanan öğenin verilerine göre bir işlem yapmaya yarıyor
                     // Örneğin, ProfileFragment'a gitmek için
-                    RestaurantFragment restaurantFragment = new RestaurantFragment();
+
                     FragmentTransaction transaction = getFragmentManager().beginTransaction();
                     transaction.replace(R.id.frame_layout, restaurantFragment);
                     transaction.addToBackStack(null);

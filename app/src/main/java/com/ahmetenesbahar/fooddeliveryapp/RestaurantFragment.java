@@ -13,6 +13,8 @@ import android.view.ViewGroup;
 
 import com.ahmetenesbahar.fooddeliveryapp.databinding.FragmentRestaurantBinding;
 import com.ahmetenesbahar.fooddeliveryapp.databinding.FragmentRestaurantsBinding;
+import com.ahmetenesbahar.fooddeliveryapp.models.Restaurant;
+import com.squareup.picasso.Picasso;
 
 
 public class RestaurantFragment extends Fragment {
@@ -47,6 +49,16 @@ public class RestaurantFragment extends Fragment {
 
         binding = FragmentRestaurantBinding.inflate(inflater, container, false);
         View view = binding.getRoot();
+
+        Bundle bundle = getArguments();
+        if (bundle != null) {
+            Restaurant clickedRestaurant = (Restaurant) bundle.getSerializable("clickedRestaurant");
+            // Now you have the clicked restaurant data, do something with it
+            Picasso.get().load(clickedRestaurant.getRestaurantImage()).into(binding.imageProfile);
+        }
+
+
+
         replaceFragment(new RestaurantMenuFragment());
 
         binding.restaurantNav.setOnItemSelectedListener(item -> {

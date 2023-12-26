@@ -1,11 +1,6 @@
 package com.ahmetenesbahar.fooddeliveryapp.models;
 
-import android.os.Parcel;
-import android.os.Parcelable;
-
-import androidx.annotation.NonNull;
-
-public class Menu implements Parcelable {
+public class Menu  {
     // Buraya sonradan gerek kalmayabilir ben ui otursun diye yapıyorum bunu şuanda.
     private String RestaurantMenuImage;
     private String RestaurantMenuTitle;
@@ -26,13 +21,4 @@ public class Menu implements Parcelable {
         return RestaurantMenuTitle;
     }
 
-    @Override
-    public int describeContents() {
-        return 0;
-    }
-
-    @Override
-    public void writeToParcel(@NonNull Parcel dest, int flags) {
-
-    }
 }
