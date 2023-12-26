@@ -1,6 +1,11 @@
 package com.ahmetenesbahar.fooddeliveryapp.models;
 
-public class Comment {
+import android.os.Parcel;
+import android.os.Parcelable;
+
+import androidx.annotation.NonNull;
+
+public class Comment implements Parcelable {
     private String userId;
 
     private String userName;
@@ -58,5 +63,15 @@ public class Comment {
 
     public void setCommentRating(int commentRating) {
         CommentRating = commentRating;
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(@NonNull Parcel dest, int flags) {
+
     }
 }

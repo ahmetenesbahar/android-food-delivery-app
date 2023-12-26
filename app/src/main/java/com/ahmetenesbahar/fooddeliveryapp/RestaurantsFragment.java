@@ -2,6 +2,7 @@ package com.ahmetenesbahar.fooddeliveryapp;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.GestureDetector;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -18,6 +19,11 @@ import com.ahmetenesbahar.fooddeliveryapp.adapter.RestaurantsAdapter;
 import com.ahmetenesbahar.fooddeliveryapp.databinding.FragmentRestaurantsBinding;
 import com.ahmetenesbahar.fooddeliveryapp.models.Item;
 import com.ahmetenesbahar.fooddeliveryapp.models.Restaurant;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,6 +31,10 @@ import java.util.List;
 public class RestaurantsFragment extends Fragment {
 
     private FragmentRestaurantsBinding binding;
+
+    DatabaseReference databaseReference;
+
+    RestaurantsAdapter adapter;
 
 
     public RestaurantsFragment() {
@@ -55,17 +65,40 @@ public class RestaurantsFragment extends Fragment {
         RecyclerView recyclerView = binding.restaurantsRecyclerView;
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
 
+        adapter = new RestaurantsAdapter(new ArrayList<>());
+        databaseReference= FirebaseDatabase.getInstance().getReference("Restaurants");
+
         List<Item> items = new ArrayList<>();
+        //Buradan itibaren
 
-        // Restoran öğeleri
-        Restaurant restaurant1 = new Restaurant("https://firebasestorage.googleapis.com/v0/b/fooddeliveryapp-54b1f.appspot.com/o/BurgerkingImages%2Fburgerking_profileImage.jpg?alt=media&token=b957bba5-26f4-4678-bff3-19c508daa03a", "Katkı Döner Dürüm 1");
-        items.add(new Item(0, restaurant1));
+            databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+
+                for (DataSnapshot restaurantSnapshot : dataSnapshot.getChildren()) {
+
+                    Restaurant restaurant = restaurantSnapshot.getValue(Restaurant.class);
+
+                    items.add(new Item(0, restaurant));
+
+                }
+
+
+                recyclerView.setAdapter(new RestaurantsAdapter(items));
+                adapter.notifyDataSetChanged();
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+                // Handle error yeri
+            }
+        });
 
 
 
 
 
-        recyclerView.setAdapter(new RestaurantsAdapter(items));
+
 
         recyclerView.addOnItemTouchListener(new RecyclerView.SimpleOnItemTouchListener() {
             GestureDetector gestureDetector = new GestureDetector(getActivity(), new GestureDetector.SimpleOnGestureListener() {
@@ -84,6 +117,10 @@ public class RestaurantsFragment extends Fragment {
 
                     // Tıklanan öğenin verilerini almaya yarıyor
                     Item clickedItem = items.get(position);
+                    Restaurant clickedRestaurant = (Restaurant) clickedItem.getObject();
+
+                    Bundle bundle = new Bundle();
+                    bundle.putParcelable("clickedRestaurant", clickedRestaurant);
 
                     // Tıklanan öğenin verilerine göre bir işlem yapmaya yarıyor
                     // Örneğin, ProfileFragment'a gitmek için
