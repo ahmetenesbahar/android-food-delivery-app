@@ -1,22 +1,47 @@
 package com.ahmetenesbahar.fooddeliveryapp.models;
 
-public class Restaurant {
-    private int RestaurantImage;
-    private String RestaurantTitle;
+import java.util.ArrayList;
+import java.util.List;
 
-    public Restaurant(int restaurantImage, String restaurantTitle) {
-        RestaurantImage = restaurantImage;
-        RestaurantTitle = restaurantTitle;
+public class Restaurant {
+    private String restaurantImage;
+    private String restaurantTitle;
+
+    List<Comment> comments;
+    List<Menu> menus;
+
+    public Restaurant( String restaurantImage, String restaurantTitle) {
+        this.restaurantImage = restaurantImage;
+        this.restaurantTitle = restaurantTitle;
+        this.comments = new ArrayList<>();
+        this.menus = new ArrayList<>();
 
     }
 
-    public int getRestaurantImage() {
-        return RestaurantImage;
+    public String  getRestaurantImage() {
+        return restaurantImage;
     }
 
     public String getRestaurantTitle() {
-        return RestaurantTitle;
+        return restaurantTitle;
     }
 
+    public List<Comment> getComments() {
+        return comments;
+    }
 
+    public void addComment(Comment comment) {
+        comments.add(comment);
+    }
+
+    public List<Menu> getMenus() {
+        return menus;
+    }
+
+    public void addMenu(Menu menu) {
+        menus.add(menu);
+    }
 }
+
+
+

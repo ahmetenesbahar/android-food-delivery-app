@@ -58,23 +58,12 @@ public class RestaurantsFragment extends Fragment {
         List<Item> items = new ArrayList<>();
 
         // Restoran öğeleri
-        Restaurant restaurant1 = new Restaurant(R.drawable.background_image_signin, "Katkı Döner Dürüm 1");
+        Restaurant restaurant1 = new Restaurant("https://firebasestorage.googleapis.com/v0/b/fooddeliveryapp-54b1f.appspot.com/o/BurgerkingImages%2Fburgerking_profileImage.jpg?alt=media&token=b957bba5-26f4-4678-bff3-19c508daa03a", "Katkı Döner Dürüm 1");
         items.add(new Item(0, restaurant1));
 
-        Restaurant restaurant2 = new Restaurant(R.drawable.background_image_signin, "Katkı Döner Dürüm 2");
-        items.add(new Item(0, restaurant2));
 
-        Restaurant restaurant3 = new Restaurant(R.drawable.background_organik, "Katkı Döner Dürüm 1");
-        items.add(new Item(0, restaurant3));
 
-        Restaurant restaurant4 = new Restaurant(R.drawable.background_organik, "Katkı Döner Dürüm 3");
-        items.add(new Item(0, restaurant4));
 
-        Restaurant restaurant5 = new Restaurant(R.drawable.background_organik, "Katkı Döner Dürüm 3");
-        items.add(new Item(0, restaurant5));
-
-        Restaurant restaurant6 = new Restaurant(R.drawable.background_organik, "Katkı Döner Dürüm 3");
-        items.add(new Item(0, restaurant6));
 
         recyclerView.setAdapter(new RestaurantsAdapter(items));
 

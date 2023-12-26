@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.ahmetenesbahar.fooddeliveryapp.databinding.ItemContainerRestaurantsBinding;
 import com.ahmetenesbahar.fooddeliveryapp.models.Item;
 import com.ahmetenesbahar.fooddeliveryapp.models.Restaurant;
+import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
@@ -60,7 +61,7 @@ public class RestaurantsAdapter extends RecyclerView.Adapter<RestaurantsAdapter.
         }
 
         void setRestaurantData(Restaurant restaurant){
-            binding.imageRestaurant.setImageResource(restaurant.getRestaurantImage());
+            Picasso.get().load(restaurant.getRestaurantImage()).into(binding.imageRestaurant);
             binding.textRestaurantTitle.setText(restaurant.getRestaurantTitle());
 
         }
