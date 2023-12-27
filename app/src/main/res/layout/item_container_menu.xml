@@ -32,7 +32,7 @@
             android:shadowDy="0"
             android:shadowRadius="20"
             android:textColor="@android:color/white"
-            android:textSize="28sp"
+            android:textSize="23sp"
             android:textStyle="bold"
             android:background="@drawable/title_radius"
             android:paddingHorizontal="8dp"

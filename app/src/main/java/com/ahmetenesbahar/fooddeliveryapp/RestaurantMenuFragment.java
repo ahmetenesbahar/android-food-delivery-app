@@ -20,10 +20,15 @@ import com.ahmetenesbahar.fooddeliveryapp.adapter.MenuAdapter;
 import com.ahmetenesbahar.fooddeliveryapp.adapter.RestaurantsAdapter;
 import com.ahmetenesbahar.fooddeliveryapp.databinding.FragmentRestaurantMenuBinding;
 import com.ahmetenesbahar.fooddeliveryapp.databinding.FragmentRestaurantsBinding;
+import com.ahmetenesbahar.fooddeliveryapp.models.Comment;
 import com.ahmetenesbahar.fooddeliveryapp.models.Item;
 import com.ahmetenesbahar.fooddeliveryapp.models.Menu;
 import com.ahmetenesbahar.fooddeliveryapp.models.Restaurant;
 import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
 import com.squareup.picasso.Target;
 
@@ -35,6 +40,7 @@ public class RestaurantMenuFragment extends Fragment {
 
     private FragmentRestaurantMenuBinding binding;
     MenuAdapter adapter;
+
 
     public RestaurantMenuFragment() {
         // Required empty public constructor
@@ -73,17 +79,17 @@ public class RestaurantMenuFragment extends Fragment {
         Bundle bundle = getArguments();
         if (bundle != null) {
             Restaurant restaurantMenu = (Restaurant) bundle.getSerializable("clickedRestaurant");
+
             restaurantMenu.getMenus().forEach(menu -> {
-                Log.d("RestaurantMenuFragment", "onCreateView: " + menu.getRestaurantMenuImage());
                 items.add(new Item(0, menu));
+
             });
+
 
             recyclerView.setAdapter(new MenuAdapter(items));
 
         }
 
-
-        recyclerView.setAdapter(new MenuAdapter(items));
 
         binding.orderBtn.setOnClickListener(new View.OnClickListener() {
             @Override

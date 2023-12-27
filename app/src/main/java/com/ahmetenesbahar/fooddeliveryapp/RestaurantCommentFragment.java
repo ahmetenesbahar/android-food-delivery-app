@@ -6,6 +6,7 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,6 +16,7 @@ import com.ahmetenesbahar.fooddeliveryapp.adapter.MenuAdapter;
 import com.ahmetenesbahar.fooddeliveryapp.databinding.FragmentRestaurantCommentBinding;
 import com.ahmetenesbahar.fooddeliveryapp.models.Comment;
 import com.ahmetenesbahar.fooddeliveryapp.models.Item;
+import com.ahmetenesbahar.fooddeliveryapp.models.Restaurant;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,10 +30,10 @@ public class RestaurantCommentFragment extends Fragment {
     }
 
 
-    public static RestaurantCommentFragment newInstance(String param1, String param2) {
+    public static RestaurantCommentFragment newInstance(Restaurant restaurant) {
         RestaurantCommentFragment fragment = new RestaurantCommentFragment();
         Bundle args = new Bundle();
-
+        args.putSerializable("clickedRestaurant", restaurant);
         fragment.setArguments(args);
         return fragment;
     }
@@ -56,12 +58,21 @@ public class RestaurantCommentFragment extends Fragment {
 
         List<Item> items = new ArrayList<>();
 
-        Comment comment1 = new Comment("31", "Ahmet", "Çok güzel bir yemekti.", "https://www.karaca.com/blog/wp-content/uploads/2023/02/lezzetli-hamburger-tarifi.webp", 2);
-        items.add(new Item(0, comment1));
-        Comment comment2 = new Comment("32", "Ahmet", "Çok güzel bir yemekti.", "https://cdn.pixabay.com/photo/2017/03/23/19/57/asparagus-2169305_960_720.jpg", 3);
-        items.add(new Item(0, comment2));
 
-        recyclerView.setAdapter(new CommentAdapter(items));
+        Bundle bundle = getArguments();
+        if (bundle != null) {
+            Restaurant restaurantComment = (Restaurant) bundle.getSerializable("clickedRestaurant");
+
+            restaurantComment.getComments().forEach(comment -> {
+                Log.d("comment", comment.getCommentImage());
+                items.add(new Item(0, comment));
+            });
+
+
+            recyclerView.setAdapter(new CommentAdapter(items));
+
+        }
+
 
         return view;
     }

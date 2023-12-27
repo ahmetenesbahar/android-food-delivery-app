@@ -3,24 +3,24 @@ package com.ahmetenesbahar.fooddeliveryapp.models;
 import java.io.Serializable;
 
 public class Menu implements Serializable {
-    // Buraya sonradan gerek kalmayabilir ben ui otursun diye yapıyorum bunu şuanda.
-    private String RestaurantMenuImage;
-    private String RestaurantMenuTitle;
+
+    private String restaurantMenuImage;
+    private String restaurantMenuTitle;
 
     public Menu() {
     }
-    public Menu(String restaurantMenuImage, String restaurantMenuTitle) {
-        RestaurantMenuImage = restaurantMenuImage;
-        RestaurantMenuTitle = restaurantMenuTitle;
 
+    public Menu(String restaurantMenuImage, String restaurantMenuTitle) {
+        this.restaurantMenuImage = restaurantMenuImage;
+        this.restaurantMenuTitle = restaurantMenuTitle;
     }
 
     public String getRestaurantMenuImage() {
-        return RestaurantMenuImage;
+        return restaurantMenuImage;
     }
 
     public String getRestaurantMenuTitle() {
-        return RestaurantMenuTitle;
+        return restaurantMenuTitle;
     }
 
 }
