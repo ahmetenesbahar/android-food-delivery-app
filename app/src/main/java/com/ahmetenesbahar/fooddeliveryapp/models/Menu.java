@@ -1,6 +1,8 @@
 package com.ahmetenesbahar.fooddeliveryapp.models;
 
-public class Menu  {
+import java.io.Serializable;
+
+public class Menu implements Serializable {
     // Buraya sonradan gerek kalmayabilir ben ui otursun diye yapıyorum bunu şuanda.
     private String RestaurantMenuImage;
     private String RestaurantMenuTitle;

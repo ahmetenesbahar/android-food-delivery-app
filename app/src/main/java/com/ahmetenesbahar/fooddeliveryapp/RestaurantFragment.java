@@ -13,6 +13,7 @@ import android.view.ViewGroup;
 
 import com.ahmetenesbahar.fooddeliveryapp.databinding.FragmentRestaurantBinding;
 import com.ahmetenesbahar.fooddeliveryapp.databinding.FragmentRestaurantsBinding;
+import com.ahmetenesbahar.fooddeliveryapp.models.Menu;
 import com.ahmetenesbahar.fooddeliveryapp.models.Restaurant;
 import com.squareup.picasso.Picasso;
 
@@ -20,7 +21,7 @@ import com.squareup.picasso.Picasso;
 public class RestaurantFragment extends Fragment {
 
     FragmentRestaurantBinding binding;
-
+    private Restaurant clickedRestaurant;
 
     public RestaurantFragment() {
         // Required empty public constructor
@@ -39,7 +40,7 @@ public class RestaurantFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-
+            clickedRestaurant = (Restaurant) getArguments().getSerializable("clickedRestaurant");
         }
     }
 
@@ -50,13 +51,13 @@ public class RestaurantFragment extends Fragment {
         binding = FragmentRestaurantBinding.inflate(inflater, container, false);
         View view = binding.getRoot();
 
+
         Bundle bundle = getArguments();
-        if (bundle != null) {
-            Restaurant clickedRestaurant = (Restaurant) bundle.getSerializable("clickedRestaurant");
+        if (clickedRestaurant != null) {
             // Now you have the clicked restaurant data, do something with it
+            binding.textViewRestaurantName.setText(clickedRestaurant.getRestaurantTitle());
             Picasso.get().load(clickedRestaurant.getRestaurantImage()).into(binding.imageProfile);
         }
-
 
 
         replaceFragment(new RestaurantMenuFragment());
@@ -70,14 +71,20 @@ public class RestaurantFragment extends Fragment {
             }
             return true;
         });
-        
+
         return view;
     }
 
     private void replaceFragment(Fragment fragment) {
+        Bundle args = new Bundle();
+        args.putSerializable("clickedRestaurant", clickedRestaurant);
+        fragment.setArguments(args);
+
         FragmentManager fragmentManager = getChildFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         fragmentTransaction.replace(R.id.restaurant_layout, fragment);
         fragmentTransaction.commit();
     }
+
+
 }

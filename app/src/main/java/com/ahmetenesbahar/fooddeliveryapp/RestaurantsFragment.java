@@ -66,12 +66,12 @@ public class RestaurantsFragment extends Fragment {
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
 
         adapter = new RestaurantsAdapter(new ArrayList<>());
-        databaseReference= FirebaseDatabase.getInstance().getReference("Restaurants");
+        databaseReference = FirebaseDatabase.getInstance().getReference("Restaurants");
 
         List<Item> items = new ArrayList<>();
         //Buradan itibaren
 
-            databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
+        databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
@@ -80,6 +80,7 @@ public class RestaurantsFragment extends Fragment {
                     Restaurant restaurant = restaurantSnapshot.getValue(Restaurant.class);
 
                     items.add(new Item(0, restaurant));
+
 
                 }
 
@@ -93,11 +94,6 @@ public class RestaurantsFragment extends Fragment {
                 // Handle error yeri
             }
         });
-
-
-
-
-
 
 
         recyclerView.addOnItemTouchListener(new RecyclerView.SimpleOnItemTouchListener() {
@@ -119,6 +115,7 @@ public class RestaurantsFragment extends Fragment {
                     Item clickedItem = items.get(position);
                     Restaurant clickedRestaurant = (Restaurant) clickedItem.getObject();
                     RestaurantFragment restaurantFragment = new RestaurantFragment();
+
 
                     Bundle bundle = new Bundle();
                     bundle.putSerializable("clickedRestaurant", clickedRestaurant);
