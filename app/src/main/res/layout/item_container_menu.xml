@@ -45,8 +45,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:layout_marginBottom="8dp"
-            android:layout_marginEnd="8dp"
+            android:background="@drawable/title_radius"
             app:layout_constraintBottom_toBottomOf="@id/imageRestaurantMenu"
             app:layout_constraintEnd_toEndOf="@id/imageRestaurantMenu"
 
@@ -65,7 +64,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="0"
-                android:textColor="#fff"
+                android:textColor="#fffe"
                 android:textSize="20sp"
                 android:layout_marginStart="4dp"
                 android:layout_marginEnd="4dp"

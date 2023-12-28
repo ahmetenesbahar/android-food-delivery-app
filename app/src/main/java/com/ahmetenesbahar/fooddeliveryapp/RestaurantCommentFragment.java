@@ -63,11 +63,7 @@ public class RestaurantCommentFragment extends Fragment {
         if (bundle != null) {
             Restaurant restaurantComment = (Restaurant) bundle.getSerializable("clickedRestaurant");
 
-            restaurantComment.getComments().forEach(comment -> {
-                Log.d("comment", comment.getCommentImage());
-                items.add(new Item(0, comment));
-            });
-
+            Log.d("RestaurantCommentFragment", "onCreateView: " + restaurantComment.getComments());
 
             recyclerView.setAdapter(new CommentAdapter(items));
 

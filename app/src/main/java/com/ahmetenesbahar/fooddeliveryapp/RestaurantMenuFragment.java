@@ -88,16 +88,17 @@ public class RestaurantMenuFragment extends Fragment {
 
             recyclerView.setAdapter(new MenuAdapter(items));
 
+            binding.orderBtn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(getActivity(), CommentActivity.class);
+                    intent.putExtra("clickedRestaurant", restaurantMenu);
+                    startActivity(intent);
+                }
+            });
+
         }
 
-
-        binding.orderBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(getActivity(), CommentActivity.class);
-                startActivity(intent);
-            }
-        });
 
         return view;
     }

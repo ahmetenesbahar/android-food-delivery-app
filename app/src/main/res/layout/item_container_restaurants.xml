@@ -25,18 +25,20 @@
 
         <TextView
             android:id="@+id/textRestaurantTitle"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:shadowColor="@android:color/black"
             android:shadowDx="0"
             android:shadowDy="0"
             android:shadowRadius="20"
             android:textColor="@android:color/white"
+            android:paddingHorizontal="8dp"
             android:textSize="28sp"
             android:textStyle="bold"
-
+            android:background="@drawable/title_radius"
             app:layout_constraintBottom_toBottomOf="parent"
-            tools:layout_editor_absoluteX="20dp" />
+            tools:layout_editor_absoluteX="20dp"
+            tools:ignore="MissingConstraints" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

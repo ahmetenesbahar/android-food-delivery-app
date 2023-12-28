@@ -1,25 +1,36 @@
 package com.ahmetenesbahar.fooddeliveryapp.models;
 
 import java.io.Serializable;
+import java.util.HashMap;
+import java.util.Map;
 
 public class Comment implements Serializable {
     private String userId;
 
     private String userName;
-    private String CommentText;
-    private String CommentImage;
-    private int CommentRating;
+    private String commentText;
+    private String commentImage;
+    private float commentRating;
 
     public Comment() {
 
     }
 
-    public Comment(String userId, String userName, String commenText, String commentImage, int commentRating) {
+    public Comment(String userId, String userName, String commentText, String commentImage, float commentRating) {
         this.userId = userId;
         this.userName = userName;
-        CommentText = commenText;
-        CommentImage = commentImage;
-        CommentRating = commentRating;
+        this.commentText = commentText;
+        this.commentImage = commentImage;
+        this.commentRating = commentRating;
+    }
+
+
+    public String getUserId() {
+        return userId;
+    }
+
+    public void setUserId(String userId) {
+        this.userId = userId;
     }
 
     public String getUserName() {
@@ -30,35 +41,28 @@ public class Comment implements Serializable {
         this.userName = userName;
     }
 
-    public String getUserId() {
-        return userId;
-    }
-
-    public void setUserId(String userId) {
-        this.userId = userId;
-    }
-
     public String getCommentText() {
-        return CommentText;
+        return commentText;
     }
 
-    public void setCommentText(String commenText) {
-        CommentText = commenText;
+    public void setCommentText(String commentText) {
+        this.commentText = commentText;
     }
 
     public String getCommentImage() {
-        return CommentImage;
+        return commentImage;
     }
 
     public void setCommentImage(String commentImage) {
-        CommentImage = commentImage;
+        this.commentImage = commentImage;
     }
 
-    public int getCommentRating() {
-        return CommentRating;
+    public float getCommentRating() {
+        return commentRating;
     }
 
-    public void setCommentRating(int commentRating) {
-        CommentRating = commentRating;
+    public void setCommentRating(float commentRating) {
+        this.commentRating = commentRating;
     }
+    
 }
