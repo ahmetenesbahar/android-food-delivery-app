@@ -30,7 +30,10 @@ import com.ahmetenesbahar.fooddeliveryapp.models.Comment;
 import com.ahmetenesbahar.fooddeliveryapp.models.Item;
 import com.ahmetenesbahar.fooddeliveryapp.models.Restaurant;
 import com.ahmetenesbahar.fooddeliveryapp.models.Users;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.snackbar.Snackbar;
+import com.google.firebase.Firebase;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -41,6 +44,8 @@ import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.auth.User;
 import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 
 import org.checkerframework.checker.units.qual.C;
 
@@ -48,12 +53,15 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Objects;
+import java.util.UUID;
 
 
 public class CommentActivity extends AppCompatActivity {
     ActivityCommentBinding binding;
     private FirebaseAuth auth;
     private FirebaseDatabase database;
+    private FirebaseStorage firebaseStorage;
+    private StorageReference storageReference;
     DatabaseReference databaseReference;
     DatabaseReference restauranteReference;
     Uri imageData;
@@ -67,8 +75,8 @@ public class CommentActivity extends AppCompatActivity {
     private String editTextCommentText;
     private String userName;
     private String userId;
-
     public Restaurant clickedRestaurant;
+   public  String downloadUrl;
 
 
     @Override
@@ -81,11 +89,11 @@ public class CommentActivity extends AppCompatActivity {
         database = FirebaseDatabase.getInstance();
         databaseReference = database.getReference("Users");
         restauranteReference = database.getReference("Restaurants");
-
+        firebaseStorage = FirebaseStorage.getInstance();
+        storageReference = firebaseStorage.getReference();
 
         registerLauncher();
         setContentView(binding.getRoot());
-
 
         editTextComment = binding.editTextComment;
         buttonSubmit = binding.buttonSubmit;
@@ -93,60 +101,67 @@ public class CommentActivity extends AppCompatActivity {
 
         Comment newComment = new Comment();
 
-
-        //Sayfa açıldığı gibi datayı çek
         Intent intent = getIntent();
         if (intent != null && intent.hasExtra("clickedRestaurant")) {
             clickedRestaurant = (Restaurant) intent.getSerializableExtra("clickedRestaurant");
-
         }
 
         buttonSubmit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 editTextCommentText = editTextComment.getText().toString();
                 Log.v("CommentActivity ", "onClick: yorum  " + editTextCommentText);
                 selectedRating = ratingBar.getRating();
                 Log.v("CommentActivtiy", "onClick: puan  " + selectedRating);
-
                 FirebaseUser currentUser = auth.getCurrentUser();
-
-
                 userId = currentUser.getUid();
-                databaseReference.child(userId).addListenerForSingleValueEvent(new ValueEventListener() {
 
-                    @Override
-                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                        // Check if the user exists in the database
-                        if (dataSnapshot.exists()) {
-                            Users currentUser = dataSnapshot.getValue(Users.class);
+                UUID uuid = UUID.randomUUID();
+                String commentImage = "commentImages/" + uuid + ".jpg";
 
-                            userName = (currentUser.getFirstName() + " " + currentUser.getLastName());
+                if (imageData != null) {
+                    storageReference.child(commentImage).putFile(imageData).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                        @Override
+                        public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                            StorageReference newReference = firebaseStorage.getReference(commentImage);
+                            newReference.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                                @Override
+                                public void onSuccess(Uri uri) {
+                                    downloadUrl = uri.toString();
 
-                            Comment newComment = new Comment(userId, userName, editTextCommentText, "asd", selectedRating);
+                                    databaseReference.child(userId).addListenerForSingleValueEvent(new ValueEventListener() {
+                                        @Override
+                                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                            if (dataSnapshot.exists()) {
+                                                Users currentUser = dataSnapshot.getValue(Users.class);
+                                                userName = (currentUser.getFirstName() + " " + currentUser.getLastName());
 
-                            writeNewComment(newComment, clickedRestaurant);
+                                                Comment newComment = new Comment(userId, userName, editTextCommentText, downloadUrl, selectedRating);
+                                                writeNewComment(newComment, clickedRestaurant);
 
-                            Intent intent = new Intent(CommentActivity.this, MenuActivity.class);
-                            startActivity(intent);
-                            finish();
+                                                Intent intent = new Intent(CommentActivity.this, MenuActivity.class);
+                                                startActivity(intent);
+                                                finish();
+                                            }
+                                        }
 
-
+                                        @Override
+                                        public void onCancelled(@NonNull DatabaseError error) {
+                                            // Handle error
+                                        }
+                                    });
+                                }
+                            });
                         }
-                    }
-
-                    @Override
-                    public void onCancelled(@NonNull DatabaseError error) {
-
-                    }
-                });
-
+                    }).addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+                            Toast.makeText(CommentActivity.this, e.getLocalizedMessage(), Toast.LENGTH_LONG).show();
+                        }
+                    });
+                }
             }
-
         });
-
-
     }
 
 
@@ -205,11 +220,16 @@ public class CommentActivity extends AppCompatActivity {
 
 
     public void writeNewComment(Comment newComment, Restaurant clickedRestaurant) {
-        // Assuming you have a "commentsList" node under each restaurant to store the list
+        DatabaseReference restaurantCommentsRef = restauranteReference.child(clickedRestaurant.getRestaurantId()).child("comments").push();
+        String commentId = restaurantCommentsRef.getKey();
+
+        // Assuming you have a "comments" node under each restaurant to store the list
         DatabaseReference commentsListRef = restauranteReference.child(clickedRestaurant.getRestaurantId()).child("commentsList");
+
 
         // Create a new HashMap to store comment data
         HashMap<String, Object> commentData = new HashMap<>();
+        commentData.put("commentId", commentId);
         commentData.put("userId", newComment.getUserId());
         commentData.put("userName", newComment.getUserName());
         commentData.put("commentText", newComment.getCommentText());
@@ -217,17 +237,14 @@ public class CommentActivity extends AppCompatActivity {
         commentData.put("commentRating", newComment.getCommentRating());
 
         // Push the comment data to the list
-        DatabaseReference newCommentRef = commentsListRef.push();
-        String commentId = newCommentRef.getKey();
-        commentData.put("commentId", commentId);
+        commentsListRef.child(commentId).setValue(commentData);
 
-        newCommentRef.setValue(commentData);
+
     }
 
 
     public DatabaseReference getDatabaseReference() {
         return databaseReference;
-
 
     }
 }

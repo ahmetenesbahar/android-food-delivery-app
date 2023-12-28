@@ -128,6 +128,7 @@ public class RestaurantsFragment extends Fragment {
                     FragmentTransaction transaction = getFragmentManager().beginTransaction();
                     transaction.replace(R.id.frame_layout, restaurantFragment);
                     transaction.addToBackStack(null);
+
                     transaction.commit();
 
 

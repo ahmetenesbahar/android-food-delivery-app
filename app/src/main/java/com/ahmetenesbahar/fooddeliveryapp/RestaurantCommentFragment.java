@@ -83,7 +83,7 @@ public class RestaurantCommentFragment extends Fragment {
 
                             for (DataSnapshot commentSnapshot : snapshot.getChildren()) {
                                 Comment comment = commentSnapshot.getValue(Comment.class);
-                                Log.d("RestaurantCommentFragment", "onDataChange: " + comment);
+
                                 items.add(new Item(0, comment));
                             }
 

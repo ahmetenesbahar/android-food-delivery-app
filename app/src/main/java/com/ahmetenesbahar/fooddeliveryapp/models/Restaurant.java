@@ -17,7 +17,7 @@ public class Restaurant implements Serializable {
     public Restaurant() {
     }
 
-    public Restaurant(String restaurantImage, String restaurantTitle, String restaurantId) {
+    public Restaurant( String restaurantImage, String restaurantTitle, String restaurantId) {
         this.restaurantImage = restaurantImage;
         this.restaurantTitle = restaurantTitle;
         this.restaurantId = restaurantId;
@@ -26,7 +26,8 @@ public class Restaurant implements Serializable {
 
     }
 
-    public String getRestaurantImage() {
+
+    public String  getRestaurantImage() {
         return restaurantImage;
     }
 
