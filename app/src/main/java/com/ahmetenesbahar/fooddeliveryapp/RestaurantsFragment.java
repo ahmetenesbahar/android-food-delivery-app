@@ -81,7 +81,7 @@ public class RestaurantsFragment extends Fragment {
 
                     items.add(new Item(0, restaurant));
 
-                    
+
                 }
 
 

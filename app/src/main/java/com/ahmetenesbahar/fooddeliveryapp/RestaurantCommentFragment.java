@@ -2,6 +2,7 @@ package com.ahmetenesbahar.fooddeliveryapp;
 
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -17,6 +18,11 @@ import com.ahmetenesbahar.fooddeliveryapp.databinding.FragmentRestaurantCommentB
 import com.ahmetenesbahar.fooddeliveryapp.models.Comment;
 import com.ahmetenesbahar.fooddeliveryapp.models.Item;
 import com.ahmetenesbahar.fooddeliveryapp.models.Restaurant;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -61,11 +67,37 @@ public class RestaurantCommentFragment extends Fragment {
 
         Bundle bundle = getArguments();
         if (bundle != null) {
-            Restaurant restaurantComment = (Restaurant) bundle.getSerializable("clickedRestaurant");
+            Restaurant clickedRestaurant = (Restaurant) bundle.getSerializable("clickedRestaurant");
 
-            Log.d("RestaurantCommentFragment", "onCreateView: " + restaurantComment.getComments());
+            if (clickedRestaurant != null) {
+                String restaurantId = clickedRestaurant.getRestaurantId(); // Restoranın idsini al
 
-            recyclerView.setAdapter(new CommentAdapter(items));
+                // Firebase veritabanından restoranı bul
+                DatabaseReference restaurantRef = FirebaseDatabase.getInstance().getReference().child("Restaurants").child(restaurantId);
+
+                // Restoranın commentsList'ini dinle
+                restaurantRef.child("commentsList").addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        if (snapshot.exists()) {
+
+                            for (DataSnapshot commentSnapshot : snapshot.getChildren()) {
+                                Comment comment = commentSnapshot.getValue(Comment.class);
+                                Log.d("RestaurantCommentFragment", "onDataChange: " + comment);
+                                items.add(new Item(0, comment));
+                            }
+
+
+                            recyclerView.setAdapter(new CommentAdapter(items));
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+                        // Hata durumunda işlemler
+                    }
+                });
+            }
 
         }
 

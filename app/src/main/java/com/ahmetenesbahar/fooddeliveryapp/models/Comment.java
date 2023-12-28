@@ -64,5 +64,5 @@ public class Comment implements Serializable {
     public void setCommentRating(float commentRating) {
         this.commentRating = commentRating;
     }
-    
+
 }

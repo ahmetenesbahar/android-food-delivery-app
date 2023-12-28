@@ -122,7 +122,7 @@ public class CommentActivity extends AppCompatActivity {
                         if (dataSnapshot.exists()) {
                             Users currentUser = dataSnapshot.getValue(Users.class);
 
-                            userName = (currentUser.getFirstName() + currentUser.getLastName());
+                            userName = (currentUser.getFirstName() + " " + currentUser.getLastName());
 
                             Comment newComment = new Comment(userId, userName, editTextCommentText, "asd", selectedRating);
 
