@@ -1,14 +1,24 @@
 package com.ahmetenesbahar.fooddeliveryapp;
 
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
+import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.os.Build;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
+import androidx.core.app.NotificationCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.os.Handler;
+import android.os.Looper;
 import android.util.Log;
 import android.view.GestureDetector;
 import android.view.LayoutInflater;
@@ -41,6 +51,11 @@ public class RestaurantMenuFragment extends Fragment {
     private FragmentRestaurantMenuBinding binding;
     MenuAdapter adapter;
 
+    private String CHANNEL_ID = "order_now_id";
+    private String CHANNEL_NAME = "order_now_name";
+    private String CHANNEL_DESCRIPTION = "SİPARİŞİNİZ ALINDI";
+    private int DELAY_MILLISECONDS =5000;
+
 
     public RestaurantMenuFragment() {
         // Required empty public constructor
@@ -61,7 +76,52 @@ public class RestaurantMenuFragment extends Fragment {
         if (getArguments() != null) {
 
         }
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            NotificationChannel channel = new NotificationChannel(
+                    CHANNEL_ID,
+                    CHANNEL_NAME,
+                    NotificationManager.IMPORTANCE_HIGH
+            );
+            channel.setDescription(CHANNEL_DESCRIPTION);
+
+            NotificationManager notificationManager = getActivity().getSystemService(NotificationManager.class);
+            notificationManager.createNotificationChannel(channel);
+        }
     }
+
+    private void showNotificationAfterDelay() {
+        new Handler(Looper.getMainLooper()).postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                showNotification();
+            }
+        }, DELAY_MILLISECONDS);
+    }
+
+    private void showNotification() {
+        Bitmap largeIcon = BitmapFactory.decodeResource(getResources(), R.drawable.appicon);
+
+        Intent menuIntent = new Intent(getActivity(), MenuActivity.class);
+        PendingIntent pendingIntent = PendingIntent.getActivity(getActivity(), 0, menuIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+
+
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(requireContext(), CHANNEL_ID)
+                .setSmallIcon(R.drawable.baseline_notifications_active_24)
+                .setLargeIcon(largeIcon)
+                .setContentTitle("SİPARİŞİNİZ ALINDI")
+                .setContentText("En geç 30 dk içerisinde kapında!!!")
+                .setStyle(new NotificationCompat
+                        .BigTextStyle()
+                        .setBigContentTitle("SİPARİŞİNİZ ALINDI")
+                        .bigText("Bizi tercih ettiğiniz için teşekkür ederiz.Bu bildirime tıklayarak alışverişe devam edebilirsiniz.")
+                )
+                .setContentIntent(pendingIntent)
+                .setPriority(NotificationCompat.PRIORITY_DEFAULT);
+
+        NotificationManager notificationManager = (NotificationManager) requireContext().getSystemService(Context.NOTIFICATION_SERVICE);
+        notificationManager.notify(2, builder.build());
+    }
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -94,6 +154,7 @@ public class RestaurantMenuFragment extends Fragment {
                     Intent intent = new Intent(getActivity(), CommentActivity.class);
                     intent.putExtra("clickedRestaurant", restaurantMenu);
                     startActivity(intent);
+                    showNotificationAfterDelay();
                 }
             });
 

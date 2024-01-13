@@ -18,14 +18,10 @@ import java.util.List;
 public class RestaurantsAdapter extends RecyclerView.Adapter<RestaurantsAdapter.RestaurantViewHolder> {
     private List<Item> items;
 
-
-
-
     public RestaurantsAdapter(List<Item> items) {
         this.items = items;
 
     }
-
     @NonNull
     @Override
     public RestaurantViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -33,15 +29,11 @@ public class RestaurantsAdapter extends RecyclerView.Adapter<RestaurantsAdapter.
                 LayoutInflater.from(parent.getContext()), parent, false);
         return new RestaurantViewHolder(binding);
     }
-
     @Override
     public void onBindViewHolder(@NonNull RestaurantViewHolder holder, int position) {
         Restaurant restaurant = (Restaurant) items.get(position).getObject();
         ((RestaurantViewHolder) holder).setRestaurantData(restaurant);
-
-
     }
-
     @Override
     public int getItemCount() {
         return items.size();

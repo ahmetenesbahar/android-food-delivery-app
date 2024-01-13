@@ -24,7 +24,7 @@ public class RestaurantFragment extends Fragment {
     private Restaurant clickedRestaurant;
 
     public RestaurantFragment() {
-        // Required empty public constructor
+
     }
 
 

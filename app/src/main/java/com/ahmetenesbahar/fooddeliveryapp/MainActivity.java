@@ -1,7 +1,17 @@
 package com.ahmetenesbahar.fooddeliveryapp;
 
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
+import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.Color;
+import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
 import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
@@ -9,6 +19,8 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.core.app.NotificationBuilderWithBuilderAccessor;
+import androidx.core.app.NotificationCompat;
 
 import com.ahmetenesbahar.fooddeliveryapp.databinding.ActivityMainBinding;
 import com.ahmetenesbahar.fooddeliveryapp.models.Users;
@@ -34,6 +46,10 @@ public class MainActivity extends FullScreenBaseActivity {
     private FirebaseDatabase database;
     DatabaseReference reference;
     UUID uuid = UUID.randomUUID();
+    private String CHANNEL_ID = "food_delivery_id";
+    private String CHANNEL_NAME = "food_delivery_name";
+    private String CHANNEL_DESCRIPTION = "BU İNDİRİM KAÇMAZ";
+    private int DELAY_MILLISECONDS =5000;
 
 
     @Override
@@ -52,6 +68,8 @@ public class MainActivity extends FullScreenBaseActivity {
         auth = FirebaseAuth.getInstance();
         FirebaseUser user = auth.getCurrentUser();
 
+        createNotificationChannel();
+
 
         if (user != null) {
             Intent intent = new Intent(MainActivity.this, MenuActivity.class);
@@ -59,6 +77,51 @@ public class MainActivity extends FullScreenBaseActivity {
             finish();
         }
     }
+
+    private void createNotificationChannel(){
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.O){
+            NotificationChannel channel = new NotificationChannel(
+                    CHANNEL_ID,
+                    CHANNEL_NAME,
+                    NotificationManager.IMPORTANCE_HIGH
+            );
+            channel.setDescription(CHANNEL_DESCRIPTION);
+
+            NotificationManager notificationManager = getSystemService(NotificationManager.class);
+            notificationManager.createNotificationChannel(channel);
+        }
+    }
+
+    private void showNotificationAfterDelay() {
+        new Handler(Looper.getMainLooper()).postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                showNotification();
+            }
+        }, DELAY_MILLISECONDS);
+    }
+
+    private void showNotification(){
+
+        Bitmap largeIcon = BitmapFactory.decodeResource(getResources() , R.drawable.appicon);
+
+        NotificationCompat.Builder builder  = new NotificationCompat.Builder(this,CHANNEL_ID)
+                .setSmallIcon(R.drawable.baseline_notifications_active_24)
+                .setLargeIcon(largeIcon)
+                .setContentTitle("LEZİZO İNDİRİM!!!")
+                .setContentText("Dominosta %40 a varan indirim!!!")
+                .setStyle(new NotificationCompat
+                                .BigTextStyle()
+                                .setBigContentTitle("SICAK SAATLER")
+                                .bigText("Sıcak saatler geldi! Dominos lezzetini kaçırma. Bugün yapacağın siparişte %40'a varan indirim seni bekliyor. Hemen sipariş ver, lezzeti ucuza kap! \uD83C\uDF55\uD83D\uDD25")
+                )
+                .setPriority(NotificationCompat.PRIORITY_DEFAULT);
+
+        NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+        notificationManager.notify(1,builder.build());
+
+    }
+
 
     public void signInClicked(View view) {
         setContentView(R.layout.activity_main);
@@ -120,10 +183,12 @@ public class MainActivity extends FullScreenBaseActivity {
                         }
                     });
         }
+        showNotificationAfterDelay();
     }
 
 
     public void signInButtonClicked(View view) {
+
         String email = binding.inputEmail.getText().toString();
         String password = binding.inputPassword.getText().toString();
 
@@ -146,4 +211,5 @@ public class MainActivity extends FullScreenBaseActivity {
             });
         }
     }
+
 }

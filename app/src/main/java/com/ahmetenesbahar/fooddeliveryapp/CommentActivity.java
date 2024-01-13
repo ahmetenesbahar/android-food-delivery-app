@@ -223,11 +223,11 @@ public class CommentActivity extends AppCompatActivity {
         DatabaseReference restaurantCommentsRef = restauranteReference.child(clickedRestaurant.getRestaurantId()).child("comments").push();
         String commentId = restaurantCommentsRef.getKey();
 
-        // Assuming you have a "comments" node under each restaurant to store the list
+
         DatabaseReference commentsListRef = restauranteReference.child(clickedRestaurant.getRestaurantId()).child("commentsList");
 
 
-        // Create a new HashMap to store comment data
+        // Comment datayı kaydetmek için yeni bir hashmap yarattık
         HashMap<String, Object> commentData = new HashMap<>();
         commentData.put("commentId", commentId);
         commentData.put("userId", newComment.getUserId());
@@ -236,15 +236,12 @@ public class CommentActivity extends AppCompatActivity {
         commentData.put("commentImage", newComment.getCommentImage());
         commentData.put("commentRating", newComment.getCommentRating());
 
-        // Push the comment data to the list
+        // Comment datayı listeye pushladık.
         commentsListRef.child(commentId).setValue(commentData);
 
 
     }
 
 
-    public DatabaseReference getDatabaseReference() {
-        return databaseReference;
 
-    }
 }

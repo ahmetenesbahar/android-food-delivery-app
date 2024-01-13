@@ -69,7 +69,7 @@ public class RestaurantsFragment extends Fragment {
         databaseReference = FirebaseDatabase.getInstance().getReference("Restaurants");
 
         List<Item> items = new ArrayList<>();
-        //Buradan itibaren
+
 
         databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override

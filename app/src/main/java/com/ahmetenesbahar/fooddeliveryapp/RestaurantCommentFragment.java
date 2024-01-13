@@ -25,6 +25,8 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 
 
@@ -87,6 +89,7 @@ public class RestaurantCommentFragment extends Fragment {
                                 items.add(new Item(0, comment));
                             }
 
+                            Collections.reverse(items);
 
                             recyclerView.setAdapter(new CommentAdapter(items));
                         }

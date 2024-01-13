@@ -1,7 +1,7 @@
 package com.ahmetenesbahar.fooddeliveryapp.models;
-
-public class Item {
 // Burası birden fazla veri tipi göndermek için kullanılır. Bizim şuanlık 1 tane dolayısıyla RestaurantsAdapter içerisindeki if sorgusunu kaldırabiliriz.Zaten type 0 geliyor.
+public class Item {
+
     private int type;
     private Object object;
 
